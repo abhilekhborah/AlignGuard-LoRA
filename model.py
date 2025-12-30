@@ -11,9 +11,9 @@ from scipy.spatial.distance import mahalanobis
 logger = logging.getLogger(__name__)
 
 
-class SafeLoRAModel:
+class AlignGuardModel:
     """
-    SafeLoRA: Silhouette-Aware Fine-Tuning with Parameter-Efficient Learning
+    AlignGuard: Silhouette-Aware Fine-Tuning with Parameter-Efficient Learning
     """
 
     def __init__(
@@ -295,7 +295,7 @@ class SafeLoRAModel:
         sc_history = []
         distance_ratio_history = []
 
-        logger.info("Starting SafeLoRA fine-tuning with alignment preservation...")
+        logger.info("Starting AlignGuard fine-tuning with alignment preservation...")
         for epoch in range(num_epochs):
             self.model.train()
             epoch_loss = 0.0
