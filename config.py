@@ -13,9 +13,9 @@ def set_seed(seed: int):
         torch.cuda.manual_seed_all(seed)
 
 
-class SafeLoRAConfig:
+class AlignGuardConfig:
     """
-    Configuration for SafeLoRA model.
+    Configuration for AlignGuard model.
 
     Args:
         lambda_sc: Weight for Silhouette Coefficient regularization
