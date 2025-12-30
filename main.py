@@ -3,9 +3,9 @@ import logging
 import argparse
 
 from alignguard import (
-    SafeLoRAConfig,
+    AlignGuardConfig,
     set_seed,
-    SafeLoRAModel,
+    AlignGuardModel,
     SafetyDataset,
     load_data_from_csvs,
     run_inference,
@@ -22,7 +22,7 @@ HF_TOKEN = os.environ.get("HF_TOKEN", "<YOUR_HF_TOKEN>")
 def main():
     set_seed(42)
 
-    parser = argparse.ArgumentParser(description="SafeLoRA fine-tuning with separate safe and unsafe CSV data")
+    parser = argparse.ArgumentParser(description="AlignGuard fine-tuning with separate safe and unsafe CSV data")
     parser.add_argument("--model_path", type=str, default="meta-llama/Llama-2-7b-hf", help="Path to the pretrained LLaMA model")
     parser.add_argument("--safe_csv_path", type=str, required=True, help="Path to the CSV file with safe instruction-response pairs")
     parser.add_argument("--unsafe_csv_path", type=str, required=True, help="Path to the CSV file with unsafe instruction-response pairs")
@@ -59,7 +59,7 @@ def main():
     if args.enable_poison_detection:
         logger.info(f"  - Poison Detection Threshold: {args.safety_threshold}")
 
-    config = SafeLoRAConfig(
+    config = AlignGuardConfig(
         lambda_sc=args.lambda_sc,
         lambda_null=args.lambda_null,
         poison_threshold=args.safety_threshold,
@@ -82,8 +82,8 @@ def main():
         tokenizer.add_special_tokens({'pad_token': '[PAD]'})
         logger.info(f"Added pad token. Tokenizer size: {len(tokenizer)}")
 
-    logger.info(f"Initializing SafeLoRA for alignment-preserved fine-tuning...")
-    safe_lora = SafeLoRAModel(args.model_path, config, tokenizer)
+    logger.info(f"Initializing AlignGuard for alignment-preserved fine-tuning...")
+    safe_lora = AlignGuardModel(args.model_path, config, tokenizer)
 
     texts, labels, safety_labels = load_data_from_csvs(args.safe_csv_path, args.unsafe_csv_path)
 
