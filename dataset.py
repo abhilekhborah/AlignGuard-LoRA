@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 class SafetyDataset(Dataset):
     """
-    Dataset class that includes safety labels for SafeLoRA.
+    Dataset class that includes safety labels for AlignGuard.
 
     Args:
         texts: List of input texts
